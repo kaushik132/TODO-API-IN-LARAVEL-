@@ -1,0 +1,10 @@
+php artisan reminders:send-installment
+```
+
+---
+
+## Jab Live Server pe Daalo (cPanel/Hosting):
+
+Tab cPanel mein **Cron Jobs** section mein ye daalna:
+```
+* * * * * php /home/username/public_html/artisan schedule:run >> /dev/null 2>&1
