@@ -15,8 +15,8 @@ class Transaction extends Model
         'user_id',
         'name',
         'phone',
-        'address',           // ← Contact address
-        'avatar',            // ← Contact profile image path
+        'address',
+        'avatar',
         'person_type',
         'transaction_type',
         'total_amount',
@@ -27,6 +27,7 @@ class Transaction extends Model
         'installment_date',
         'date',
         'note',
+        'screenshot_name',   // ← Screenshot image path
     ];
 
     protected $casts = [

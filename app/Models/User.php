@@ -16,7 +16,9 @@ class User extends Authenticatable
         'password',
         'google_id',
         'avatar',
-        'fcm_token',  // ← FCM Push Notification token
+        'fcm_token',
+        'department_id', // ← Department assign
+        'role',          // ← super_admin | admin | member
     ];
 
     protected $hidden = [
@@ -30,8 +32,44 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    // =============================================
+    // Relationships
+    // =============================================
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    // =============================================
+    // Role Check Helpers
+    // =============================================
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === 'super_admin';
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isMember(): bool
+    {
+        return $this->role === 'member';
+    }
+
+    // Same department ke users
+    public function departmentMembers()
+    {
+        if (!$this->department_id) return collect();
+
+        return User::where('department_id', $this->department_id)
+                   ->where('id', '!=', $this->id)
+                   ->get();
     }
 }

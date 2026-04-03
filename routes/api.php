@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ReminderController;
 use App\Http\Controllers\Api\ContactTransactionController;
 use App\Http\Controllers\Api\QuickTransactionController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\DepartmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -85,4 +86,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/{phone}',    [ContactController::class, 'update']);        // Update (POST for file)
         Route::delete('/{phone}',  [ContactController::class, 'destroy']);  // Delete
          });
+
+
+             Route::prefix('departments')->group(function () {
+        Route::get('/',                [DepartmentController::class, 'index']);        // All departments
+        Route::post('/',               [DepartmentController::class, 'store']);        // Create (super_admin)
+        Route::put('/{id}',            [DepartmentController::class, 'update']);       // Update (super_admin)
+        Route::delete('/{id}',         [DepartmentController::class, 'destroy']);      // Delete (super_admin)
+        Route::get('/my-department',   [DepartmentController::class, 'myDepartment']); // My department
+        Route::get('/{id}/members',    [DepartmentController::class, 'members']);      // Department members
+        Route::post('/assign-user',    [DepartmentController::class, 'assignUser']);   // Assign user
+    });
 });
